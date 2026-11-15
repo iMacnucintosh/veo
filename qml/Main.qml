@@ -352,7 +352,7 @@ Window {
 
     // Bottom: progress and controls
     Rectangle {
-        id: bottom
+        id: controlsBar
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -548,7 +548,7 @@ Window {
     MenuCard {
         id: audioMenu
         anchors.right: parent.right
-        anchors.bottom: bottom.top
+        anchors.bottom: controlsBar.top
         anchors.rightMargin: 24
         anchors.bottomMargin: -40
         open: win.menu === "audio"
@@ -565,7 +565,7 @@ Window {
     MenuCard {
         id: subtitleMenu
         anchors.right: parent.right
-        anchors.bottom: bottom.top
+        anchors.bottom: controlsBar.top
         anchors.rightMargin: 24
         anchors.bottomMargin: -40
         open: win.menu === "subtitles"
@@ -629,7 +629,7 @@ Window {
     MenuCard {
         id: speedMenu
         anchors.right: parent.right
-        anchors.bottom: bottom.top
+        anchors.bottom: controlsBar.top
         anchors.rightMargin: 24
         anchors.bottomMargin: -40
         width: 200
@@ -704,7 +704,7 @@ Window {
         readonly property bool shown: (player.ended || DevShotUi === "next") && win.nextFile !== "" && !dismissed
 
         anchors.right: parent.right
-        anchors.bottom: bottom.top
+        anchors.bottom: controlsBar.top
         anchors.rightMargin: 24
         anchors.bottomMargin: 8
         width: 340
