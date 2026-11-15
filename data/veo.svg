@@ -1,11 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <!-- Veo: a rounded screen with a play shape, in the family's soft violet -->
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8f7cf0"/>
-      <stop offset="1" stop-color="#5b46c9"/>
-    </linearGradient>
-  </defs>
-  <rect x="8" y="8" width="112" height="112" rx="34" fill="url(#bg)"/>
-  <path d="M52 40.5c0-3.6 3.9-5.8 7-4l35 21.5c2.9 1.8 2.9 6.1 0 7.9L59 87.5c-3.1 1.9-7-.3-7-4z" fill="#ffffff"/>
+  <!-- Veo: the symbol alone, in its own flat colour -->
+  <g transform="translate(64 64) scale(1.6) translate(-64 -64)">
+  <path d="M52 41.5c0-3.6 3.9-5.8 7-4l30.5 18.7c2.9 1.8 2.9 6.1 0 7.9L59 82.8c-3.1 1.9-7-.3-7-4z" fill="#f0883e" transform="translate(-6 4)"/>
+  </g>
 </svg>
