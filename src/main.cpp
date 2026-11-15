@@ -49,6 +49,10 @@ void loadSylphrenaUiFont() {
 int main(int argc, char *argv[]) {
     // libmpv draws through OpenGL into the scene
     QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+    // Animations by the clock, not by frames: Qt steps them once per frame assuming the monitor's refresh rate
+    // (144 Hz here), and while a video plays the frames come at its pace, so a menu took several times as long
+    if (!qEnvironmentVariableIsSet("QSG_USE_SIMPLE_ANIMATION_DRIVER"))
+        qputenv("QSG_USE_SIMPLE_ANIMATION_DRIVER", "1");
     qputenv("QT_QUICK_CONTROLS_STYLE", "Basic");
 
     QGuiApplication app(argc, argv);
