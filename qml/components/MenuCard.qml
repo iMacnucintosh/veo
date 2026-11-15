@@ -57,11 +57,12 @@ Rectangle {
             VText {
                 Layout.fillWidth: true
                 Layout.leftMargin: 12
-                Layout.topMargin: 6
-                Layout.bottomMargin: 4
+                Layout.topMargin: 8
+                Layout.bottomMargin: 6
                 text: root.title
-                color: Theme.onSurfaceVariant
-                font.pixelSize: 12
+                // Like the headers of the shell's popouts: body size, medium weight, the main text colour
+                color: Theme.onSurface
+                font.pixelSize: 15
                 font.weight: Font.Medium
             }
 
@@ -96,14 +97,16 @@ Rectangle {
                                 Layout.fillWidth: true
                                 text: row.modelData.label
                                 color: row.modelData.checked ? Theme.onSecondaryContainer : Theme.onSurface
+                                font.pixelSize: 15
                                 font.weight: row.modelData.checked ? Font.Medium : Font.Normal
                             }
                             VText {
                                 Layout.fillWidth: true
                                 visible: text.length > 0
                                 text: row.modelData.detail || ""
-                                color: Theme.onSurfaceVariant
-                                font.pixelSize: 12
+                                color: row.modelData.checked ? Theme.onSecondaryContainer : Theme.onSurfaceVariant
+                                opacity: row.modelData.checked ? 0.8 : 1
+                                font.pixelSize: 13
                             }
                         }
 

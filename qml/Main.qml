@@ -601,6 +601,7 @@ Window {
                     Layout.fillWidth: true
                     text: qsTr("Delay")
                     color: Theme.onSurface
+                    font.pixelSize: 15
                 }
                 IconButton {
                     size: 32
