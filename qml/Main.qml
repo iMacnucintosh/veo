@@ -29,7 +29,7 @@ Window {
                                         || seekBar.active || DevShotUi !== ""
 
     // Subtitles move up while the controls are on screen (mpv measures the margin on a 720-line picture)
-    onChromeShownChanged: player.setMpvProperty("sub-margin-y", String(Math.round((win.chromeShown ? 150 : 34) * 720 / Math.max(1, win.height))))
+    onChromeShownChanged: player.setMpvProperty("sub-margin-y", String(Math.round((win.chromeShown ? 175 : 34) * 720 / Math.max(1, win.height))))
 
     function formatTime(seconds) {
         const s = Math.max(0, Math.floor(seconds))
@@ -336,7 +336,7 @@ Window {
         }
 
         Behavior on opacity {
-            NumberAnimation { duration: 220 }
+            EffectsAnim {}
         }
 
         VText {
@@ -356,7 +356,7 @@ Window {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        height: 150
+        height: 180
         visible: player.loaded || player.source !== ""
         opacity: win.chromeShown ? 1 : 0
         gradient: Gradient {
@@ -365,7 +365,7 @@ Window {
         }
 
         Behavior on opacity {
-            NumberAnimation { duration: 220 }
+            EffectsAnim {}
         }
 
         // The pointer resting on the controls keeps them up
@@ -380,26 +380,50 @@ Window {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.leftMargin: 24
-            anchors.rightMargin: 24
-            anchors.bottomMargin: 14
-            spacing: 6
+            anchors.leftMargin: 28
+            anchors.rightMargin: 28
+            anchors.bottomMargin: 18
+            spacing: 8
 
-            SeekBar {
-                id: seekBar
+            // Progress: elapsed, the bar, total
+            RowLayout {
                 Layout.fillWidth: true
-                position: player.position
-                duration: player.duration
-                formatTime: win.formatTime
-                onSeekTo: (seconds) => {
-                    win.wake()
-                    player.seek(seconds, false)
+                spacing: 14
+
+                VText {
+                    Layout.minimumWidth: 44
+                    text: win.formatTime(player.position)
+                    font.pixelSize: 13
+                    font.weight: Font.Medium
+                    font.features: { "tnum": 1 }
+                }
+
+                M3Slider {
+                    id: seekBar
+                    Layout.fillWidth: true
+                    value: player.duration > 0 ? player.position / player.duration : 0
+                    hoverText: (v) => player.duration > 0 ? win.formatTime(v * player.duration) : ""
+                    onMoved: (v) => {
+                        win.wake()
+                        if (player.duration > 0)
+                            player.seek(v * player.duration, false)
+                    }
+                }
+
+                VText {
+                    Layout.minimumWidth: 44
+                    horizontalAlignment: Text.AlignRight
+                    text: win.formatTime(player.duration)
+                    color: Qt.rgba(1, 1, 1, 0.7)
+                    font.pixelSize: 13
+                    font.weight: Font.Medium
+                    font.features: { "tnum": 1 }
                 }
             }
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 4
+                spacing: 6
 
                 IconButton {
                     icon: "skip_previous"
@@ -407,25 +431,39 @@ Window {
                     enabled: win.previousFile !== ""
                     onClicked: win.openFile(win.previousFile)
                 }
-                IconButton {
-                    size: 48
-                    iconSize: 32
-                    icon: player.ended ? "replay" : (player.paused ? "play_arrow" : "pause")
-                    colour: "#ffffff"
-                    onClicked: player.togglePause()
+
+                // Play / pause: a filled button that is round while paused and squarer while playing (M3 expressive)
+                Rectangle {
+                    id: playButton
+                    implicitWidth: 64
+                    implicitHeight: 56
+                    radius: player.paused || player.ended ? height / 2 : 18
+                    color: Theme.primaryContainer
+
+                    Behavior on radius {
+                        SpatialAnim { fast: true }
+                    }
+
+                    MaterialIcon {
+                        anchors.centerIn: parent
+                        icon: player.ended ? "replay" : (player.paused ? "play_arrow" : "pause")
+                        size: 32
+                        fill: 1
+                        colour: Theme.onPrimaryContainer
+                    }
+
+                    StateLayer {
+                        radius: playButton.radius
+                        color: Theme.onPrimaryContainer
+                        onClicked: player.togglePause()
+                    }
                 }
+
                 IconButton {
                     icon: "skip_next"
                     colour: "#ffffff"
                     enabled: win.nextFile !== ""
                     onClicked: win.openFile(win.nextFile)
-                }
-
-                VText {
-                    Layout.leftMargin: 10
-                    text: win.formatTime(player.position) + " / " + win.formatTime(player.duration)
-                    font.pixelSize: 13
-                    font.features: { "tnum": 1 }
                 }
 
                 Item {
@@ -438,76 +476,63 @@ Window {
                     onClicked: player.muted = !player.muted
                 }
 
-                Item {
-                    Layout.preferredWidth: 96
-                    Layout.preferredHeight: 28
-
-                    Rectangle {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: parent.width
-                        height: 4
-                        radius: 2
-                        color: Qt.rgba(1, 1, 1, 0.25)
-
-                        Rectangle {
-                            width: parent.width * (player.muted ? 0 : player.volume / 100)
-                            height: parent.height
-                            radius: parent.radius
-                            color: "#ffffff"
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        function set(x) {
-                            player.muted = false
-                            player.volume = Math.round(Math.max(0, Math.min(1, x / width)) * 100)
-                        }
-                        onPressed: (mouse) => set(mouse.x)
-                        onPositionChanged: (mouse) => {
-                            if (pressed)
-                                set(mouse.x)
-                        }
+                M3Slider {
+                    Layout.preferredWidth: 112
+                    trackHeight: 4
+                    activeTrackHeight: 8
+                    activeColour: "#ffffff"
+                    handleColour: "#ffffff"
+                    value: player.muted ? 0 : player.volume / 100
+                    hoverText: (v) => Math.round(v * 100) + "%"
+                    onMoved: (v) => {
+                        player.muted = false
+                        player.volume = Math.round(v * 100)
                     }
                 }
 
-                // Speed: shows itself when it is not 1×
+                // Speed: an M3 chip, filled while its menu is open
                 Rectangle {
-                    Layout.leftMargin: 6
-                    implicitWidth: speedLabel.implicitWidth + 20
+                    id: speedChip
+                    Layout.leftMargin: 10
+                    implicitWidth: speedLabel.implicitWidth + 28
                     implicitHeight: 32
-                    radius: 16
-                    color: win.menu === "speed" ? Qt.rgba(1, 1, 1, 0.2) : "transparent"
-                    border.width: 1
-                    border.color: Qt.rgba(1, 1, 1, 0.35)
+                    radius: 8
+                    color: win.menu === "speed" ? Theme.secondaryContainer : "transparent"
+                    border.width: win.menu === "speed" ? 0 : 1
+                    border.color: Qt.rgba(1, 1, 1, 0.4)
+
+                    Behavior on color {
+                        EffectsColour {}
+                    }
 
                     VText {
                         id: speedLabel
                         anchors.centerIn: parent
                         text: Number(player.speed).toLocaleString(Qt.locale(), "f", player.speed % 1 === 0 ? 0 : 2).replace(/0$/, "") + "×"
+                        color: win.menu === "speed" ? Theme.onSecondaryContainer : "#ffffff"
                         font.pixelSize: 13
                         font.weight: Font.Medium
                     }
 
                     StateLayer {
-                        radius: parent.radius
+                        radius: speedChip.radius
                         color: "#ffffff"
                         onClicked: win.menu = win.menu === "speed" ? "" : "speed"
                     }
                 }
 
+                // Audio and subtitles: tonal toggle buttons, filled while their menu is open
                 IconButton {
                     icon: "audiotrack"
-                    colour: "#ffffff"
-                    bg: win.menu === "audio" ? Qt.rgba(1, 1, 1, 0.2) : "transparent"
+                    colour: win.menu === "audio" ? Theme.onSecondaryContainer : "#ffffff"
+                    bg: win.menu === "audio" ? Theme.secondaryContainer : "transparent"
                     enabled: player.audioTracks.length > 0
                     onClicked: win.menu = win.menu === "audio" ? "" : "audio"
                 }
                 IconButton {
                     icon: player.subtitleId > 0 ? "subtitles" : "subtitles_off"
-                    colour: "#ffffff"
-                    bg: win.menu === "subtitles" ? Qt.rgba(1, 1, 1, 0.2) : "transparent"
+                    colour: win.menu === "subtitles" ? Theme.onSecondaryContainer : "#ffffff"
+                    bg: win.menu === "subtitles" ? Theme.secondaryContainer : "transparent"
                     onClicked: win.menu = win.menu === "subtitles" ? "" : "subtitles"
                 }
                 IconButton {
@@ -642,7 +667,7 @@ Window {
         visible: opacity > 0.01
 
         Behavior on opacity {
-            NumberAnimation { duration: 180 }
+            EffectsAnim { fast: true }
         }
 
         Timer {
@@ -689,7 +714,7 @@ Window {
         visible: opacity > 0.01
 
         Behavior on opacity {
-            NumberAnimation { duration: 200 }
+            EffectsAnim {}
         }
 
         onShownChanged: {

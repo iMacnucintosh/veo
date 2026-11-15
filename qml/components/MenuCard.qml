@@ -15,20 +15,26 @@ Rectangle {
 
     width: 300
     height: Math.min(column.implicitHeight + 16, 460)
-    radius: 22
-    color: Qt.rgba(Theme.surfaceContainer.r, Theme.surfaceContainer.g, Theme.surfaceContainer.b, 0.96)
-    border.width: 1
-    border.color: Qt.rgba(1, 1, 1, 0.08)
+    radius: 20
+    color: Theme.surfaceContainer
     visible: opacity > 0.01
+    // Grows out of its button (bottom right) with a little overshoot, at the shell's speed
     opacity: open ? 1 : 0
-    scale: open ? 1 : 0.94
+    scale: open ? 1 : 0.86
     transformOrigin: Item.BottomRight
+    transform: Translate {
+        y: root.open ? 0 : 10
+
+        Behavior on y {
+            SpatialAnim { fast: true }
+        }
+    }
 
     Behavior on opacity {
-        NumberAnimation { duration: 140 }
+        EffectsAnim { fast: true }
     }
     Behavior on scale {
-        NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
+        SpatialAnim { fast: true }
     }
 
     // Clicks inside do not reach the picture
@@ -67,9 +73,13 @@ Rectangle {
                     required property var modelData
 
                     Layout.fillWidth: true
-                    implicitHeight: entryCol.implicitHeight + 16
-                    radius: 14
+                    implicitHeight: entryCol.implicitHeight + 18
+                    radius: modelData.checked ? 14 : 10
                     color: modelData.checked ? Theme.secondaryContainer : "transparent"
+
+                    Behavior on color {
+                        EffectsColour {}
+                    }
 
                     RowLayout {
                         anchors.fill: parent

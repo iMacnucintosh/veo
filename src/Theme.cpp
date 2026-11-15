@@ -142,6 +142,7 @@ void Theme::loadFrom(const QString &path) {
     if (root.contains(QStringLiteral("mode")))
         m_mode = root.value(QStringLiteral("mode")).toString(m_mode);
 
+    m_animScale = qBound(0.0, root.value(QStringLiteral("animScale")).toDouble(1.0), 5.0);
     const QJsonObject tr = root.value(QStringLiteral("transparency")).toObject();
     if (!tr.isEmpty()) {
         if (tr.contains(QStringLiteral("enabled")))

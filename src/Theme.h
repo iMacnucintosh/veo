@@ -27,6 +27,8 @@ class Theme : public QObject {
     Q_PROPERTY(QColor secondaryContainer READ secondaryContainer NOTIFY changed)
     Q_PROPERTY(QColor onSecondaryContainer READ onSecondaryContainer NOTIFY changed)
     Q_PROPERTY(QColor accentFg READ accentFg NOTIFY changed)
+    Q_PROPERTY(QColor inverseSurface READ inverseSurface NOTIFY changed)
+    Q_PROPERTY(QColor inverseOnSurface READ inverseOnSurface NOTIFY changed)
     Q_PROPERTY(QColor error READ error NOTIFY changed)
     Q_PROPERTY(QColor onError READ onError NOTIFY changed)
     // Match Sylphrena appearance.font defaults (with local fallbacks).
@@ -35,6 +37,8 @@ class Theme : public QObject {
     /// Mirrors GlobalConfig.appearance.transparency (written into theme.json).
     Q_PROPERTY(bool transparencyEnabled READ transparencyEnabled NOTIFY changed)
     Q_PROPERTY(qreal transparencyBase READ transparencyBase NOTIFY changed)
+    /// The shell's animation speed (Nexus → appearance.anim.durations.scale): every duration is multiplied by it
+    Q_PROPERTY(qreal animScale READ animScale NOTIFY changed)
 
 public:
     explicit Theme(QObject *parent = nullptr);
@@ -45,6 +49,9 @@ public:
     QString iconFamily() const { return m_iconFamily; }
     bool transparencyEnabled() const { return m_transparencyEnabled; }
     qreal transparencyBase() const { return m_transparencyBase; }
+    qreal animScale() const { return m_animScale; }
+    /// A Material 3 duration (ms, at speed 1) at the shell's speed
+    Q_INVOKABLE int ms(int base) const { return qRound(base * m_animScale); }
 
     QColor background() const { return withAlpha(color("background", "surface")); }
     QColor surface() const { return withAlpha(color("surface")); }
@@ -69,6 +76,8 @@ public:
         const qreal lum = 0.2126 * c.redF() + 0.7152 * c.greenF() + 0.0722 * c.blueF();
         return lum < 0.72 ? QColor(Qt::white) : onPrimaryContainer();
     }
+    QColor inverseSurface() const { return color("inverseSurface", "onSurface"); }
+    QColor inverseOnSurface() const { return color("inverseOnSurface", "surface"); }
     QColor error() const { return color("error"); }
     QColor onError() const { return color("onError", "onPrimary"); }
 
@@ -89,6 +98,7 @@ private:
     QString m_iconFamily;
     bool m_transparencyEnabled = false;
     qreal m_transparencyBase = 0.85;
+    qreal m_animScale = 1;
     QFileSystemWatcher m_watcher;
 
     static QString pickFamily(const QStringList &candidates);

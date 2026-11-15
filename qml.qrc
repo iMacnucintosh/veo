@@ -4,7 +4,10 @@
         <file>qml/components/IconButton.qml</file>
         <file>qml/components/MaterialIcon.qml</file>
         <file>qml/components/MenuCard.qml</file>
-        <file>qml/components/SeekBar.qml</file>
+        <file>qml/components/M3Slider.qml</file>
+        <file>qml/components/SpatialAnim.qml</file>
+        <file>qml/components/EffectsAnim.qml</file>
+        <file>qml/components/EffectsColour.qml</file>
         <file>qml/components/StateLayer.qml</file>
         <file>qml/components/VText.qml</file>
         <file>data/veo.svg</file>
