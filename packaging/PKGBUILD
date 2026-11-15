@@ -1,0 +1,43 @@
+# Maintainer: iMacnucintosh
+# Builds Veo from the git repository (a -git package: pkgver follows the commits).
+#   cd packaging && makepkg -si
+pkgname=veo-git
+pkgver=0.0.0.r0.g0000000
+pkgrel=1
+pkgdesc="Video player of Sylphrena: full screen, minimal controls, audio and subtitle tracks"
+arch=('x86_64')
+url="https://github.com/iMacnucintosh/veo"
+license=('MIT')
+depends=('qt6-base' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'mpv')
+makedepends=('git')
+optdepends=('seeker: choose videos and subtitle files')
+provides=('veo')
+conflicts=('veo')
+# SYLPHRENA_REF=<tag> builds that release (the Sylphrena installer and its updates set it); without it, the latest commit
+source=("git+${url}.git${SYLPHRENA_REF:+#tag=$SYLPHRENA_REF}")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd veo
+  local described
+  if described="$(git describe --tags --long --match 'v0.*' 2>/dev/null)"; then
+    printf '%s' "$described" | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  else
+    printf '0.0.0.r%s.g%s' "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  fi
+}
+
+build() {
+  cd veo
+  qmake6 PREFIX=/usr
+  make
+}
+
+package() {
+  cd veo
+  make INSTALL_ROOT="$pkgdir" install
+  # The launcher entry starts the user-local build in ~/.local/bin; a package lives in /usr/bin
+  find "$pkgdir/usr/share" -name '*.desktop' -exec sed -i -E \
+    -e "s#/bin/sh -c 'exec \"\\\$HOME/\\.local/bin/veo\" \"\\\$@\"' sh#/usr/bin/veo#" {} +
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

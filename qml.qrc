@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/Main.qml</file>
+        <file>qml/components/IconButton.qml</file>
+        <file>qml/components/MaterialIcon.qml</file>
+        <file>qml/components/MenuCard.qml</file>
+        <file>qml/components/SeekBar.qml</file>
+        <file>qml/components/StateLayer.qml</file>
+        <file>qml/components/VText.qml</file>
+        <file>data/veo.svg</file>
+        <file>i18n/es.json</file>
+    </qresource>
+</RCC>

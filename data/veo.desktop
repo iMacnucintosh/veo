@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=Veo
+GenericName=Reproductor de vídeo
+GenericName[en]=Video Player
+Comment=Reproduce vídeos con sus pistas de audio y subtítulos
+Comment[en]=Play videos with their audio and subtitle tracks
+# Absolute via $HOME: launchers often lack ~/.local/bin in PATH.
+Exec=/bin/sh -c 'exec "$HOME/.local/bin/veo" "$@"' sh %f
+Icon=veo
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=AudioVideo;Video;Player;
+Keywords=video;vídeo;player;reproductor;película;serie;subtítulos;mkv;
+MimeType=video/mp4;video/x-matroska;video/webm;video/quicktime;video/x-msvideo;video/mpeg;video/ogg;video/x-flv;video/x-ms-wmv;video/3gpp;video/mp2t;video/x-m4v;
+StartupWMClass=veo
