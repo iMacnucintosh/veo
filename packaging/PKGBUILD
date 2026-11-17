@@ -8,6 +8,8 @@ pkgdesc="Video player of Sylenara: full screen, minimal controls, audio and subt
 arch=('x86_64')
 url="https://github.com/iMacnucintosh/veo"
 license=('GPL-3.0-only')
+# No debug package: nobody installs the symbols of this one
+options=('!debug')
 depends=('qt6-base' 'qt6-declarative>=6.9' 'qt6-svg' 'qt6-wayland' 'mpv')
 makedepends=('git')
 optdepends=('seeker: choose videos and subtitle files')
