@@ -4,17 +4,17 @@
 pkgname=veo-git
 pkgver=0.0.0.r0.g0000000
 pkgrel=1
-pkgdesc="Video player of Sylphrena: full screen, minimal controls, audio and subtitle tracks"
+pkgdesc="Video player of Sylenara: full screen, minimal controls, audio and subtitle tracks"
 arch=('x86_64')
 url="https://github.com/iMacnucintosh/veo"
-license=('MIT')
-depends=('qt6-base' 'qt6-declarative' 'qt6-svg' 'qt6-wayland' 'mpv')
+license=('GPL-3.0-only')
+depends=('qt6-base' 'qt6-declarative>=6.9' 'qt6-svg' 'qt6-wayland' 'mpv')
 makedepends=('git')
 optdepends=('seeker: choose videos and subtitle files')
 provides=('veo')
 conflicts=('veo')
-# SYLPHRENA_REF=<tag> builds that release (the Sylphrena installer and its updates set it); without it, the latest commit
-source=("git+${url}.git${SYLPHRENA_REF:+#tag=$SYLPHRENA_REF}")
+# SYLENARA_REF=<tag> builds that release (the Sylenara installer and its updates set it); without it, the latest commit
+source=("git+${url}.git${SYLENARA_REF:+#tag=$SYLENARA_REF}")
 sha256sums=('SKIP')
 
 pkgver() {
@@ -40,4 +40,5 @@ package() {
   find "$pkgdir/usr/share" -name '*.desktop' -exec sed -i -E \
     -e "s#/bin/sh -c 'exec \"\\\$HOME/\\.local/bin/veo\" \"\\\$@\"' sh#/usr/bin/veo#" {} +
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 NOTICE "$pkgdir/usr/share/licenses/$pkgname/NOTICE"
 }

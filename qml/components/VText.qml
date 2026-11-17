@@ -1,6 +1,6 @@
 import QtQuick
 
-// Text in Sylphrena's UI font; white by default, since most of Veo sits over the picture
+// Text in Sylenara's UI font; white by default, since most of Veo sits over the picture
 Text {
     color: "#ffffff"
     font.family: Theme.uiFamily
