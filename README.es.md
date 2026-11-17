@@ -71,4 +71,4 @@ El código está en inglés; `i18n/<idioma>.json` lo traduce (`VEO_LANG` fuerza 
 
 ## Licencia
 
-GPL-3.0-only, ver [LICENSE](LICENSE). Copyright (C) 2026 Manuel López Mallorquín. Créditos en [NOTICE](NOTICE).
+GPL-3.0-only, ver [LICENSE](LICENSE). Copyright (C) 2026 Manuel López Mallorquín. Ver [NOTICE](NOTICE).
