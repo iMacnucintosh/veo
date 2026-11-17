@@ -31,10 +31,10 @@ void installTranslation(QCoreApplication &app) {
         delete t;
 }
 
-void loadLuneleUiFont() {
+void loadSylenaraUiFont() {
     const QStringList candidates = {
         QDir::home().filePath(QStringLiteral(
-            ".config/quickshell/lunele/assets/google-sans-flex/"
+            ".config/quickshell/sylenara/assets/google-sans-flex/"
             "GoogleSansFlex-VariableFont_GRAD,ROND,opsz,slnt,wdth,wght.ttf")),
         QDir::home().filePath(QStringLiteral(".local/share/seeker/fonts/GoogleSansFlex.ttf")),
     };
@@ -57,12 +57,12 @@ int main(int argc, char *argv[]) {
 
     QGuiApplication app(argc, argv);
     installTranslation(app);
-    app.setOrganizationName(QStringLiteral("Lunele"));
+    app.setOrganizationName(QStringLiteral("Sylenara"));
     app.setApplicationName(QStringLiteral("Veo"));
     app.setApplicationDisplayName(QStringLiteral("Veo"));
     app.setDesktopFileName(QStringLiteral("veo"));
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("veo"), QIcon(QStringLiteral(":/data/veo.svg"))));
-    loadLuneleUiFont();
+    loadSylenaraUiFont();
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QStringLiteral("Veo — video player"));

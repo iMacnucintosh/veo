@@ -4,7 +4,7 @@
 pkgname=veo-git
 pkgver=0.0.0.r0.g0000000
 pkgrel=1
-pkgdesc="Video player of Lunele: full screen, minimal controls, audio and subtitle tracks"
+pkgdesc="Video player of Sylenara: full screen, minimal controls, audio and subtitle tracks"
 arch=('x86_64')
 url="https://github.com/iMacnucintosh/veo"
 license=('GPL-3.0-only')
@@ -13,8 +13,8 @@ makedepends=('git')
 optdepends=('seeker: choose videos and subtitle files')
 provides=('veo')
 conflicts=('veo')
-# LUNELE_REF=<tag> builds that release (the Lunele installer and its updates set it); without it, the latest commit
-source=("git+${url}.git${LUNELE_REF:+#tag=$LUNELE_REF}")
+# SYLENARA_REF=<tag> builds that release (the Sylenara installer and its updates set it); without it, the latest commit
+source=("git+${url}.git${SYLENARA_REF:+#tag=$SYLENARA_REF}")
 sha256sums=('SKIP')
 
 pkgver() {

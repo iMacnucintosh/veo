@@ -3,7 +3,7 @@
 <p align="center"><strong>English</strong> · <a href="./README.es.md">Español</a></p>
 
 <p align="center">
-The video player of <a href="https://github.com/iMacnucintosh/lunele-shell">Lunele</a>: full screen, minimal controls that get out of the way, and the audio and subtitle tracks your files carry (MKVs often have several).
+The video player of <a href="https://github.com/iMacnucintosh/sylenara-shell">Sylenara</a>: full screen, minimal controls that get out of the way, and the audio and subtitle tracks your files carry (MKVs often have several).
 </p>
 
 <p align="center"><img src="docs/screenshot.webp" width="760" alt="Veo playing a video with its audio track menu open"></p>
@@ -40,7 +40,7 @@ It uses [libmpv](https://mpv.io), so it plays almost any format, with hardware d
 
 ## Install
 
-It comes with Lunele: [its installer](https://github.com/iMacnucintosh/lunele-shell#installation) sets it up and makes it the default video player. On its own, on Arch Linux, add the [Lunele package repository](https://github.com/iMacnucintosh/lunele-packages) and install it with pacman:
+It comes with Sylenara: [its installer](https://github.com/iMacnucintosh/sylenara-shell#installation) sets it up and makes it the default video player. On its own, on Arch Linux, add the [Sylenara package repository](https://github.com/iMacnucintosh/sylenara-packages) and install it with pacman:
 
 ```sh
 sudo pacman -S veo-git
@@ -60,7 +60,7 @@ make install
 
 The package recipe is `packaging/PKGBUILD` (`veo-git`).
 
-## Lunele integration
+## Sylenara integration
 
 - **Theme**: Veo reads `~/.config/veo/theme.json`, which the shell writes with every colour scheme, and follows it live, light or dark. It also follows the shell's animation speed (`animScale` in that file).
 - **Files**: binary `~/.local/bin/veo`, state `~/.local/state/veo/`.

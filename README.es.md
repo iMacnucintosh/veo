@@ -3,7 +3,7 @@
 <p align="center"><a href="./README.md">English</a> · <strong>Español</strong></p>
 
 <p align="center">
-El reproductor de vídeo de <a href="https://github.com/iMacnucintosh/lunele-shell">Lunele</a>: pantalla completa, controles mínimos que se apartan solos, y las pistas de audio y subtítulos que traen tus archivos (los MKV suelen llevar varias).
+El reproductor de vídeo de <a href="https://github.com/iMacnucintosh/sylenara-shell">Sylenara</a>: pantalla completa, controles mínimos que se apartan solos, y las pistas de audio y subtítulos que traen tus archivos (los MKV suelen llevar varias).
 </p>
 
 <p align="center"><img src="docs/screenshot.webp" width="760" alt="Veo reproduciendo un vídeo con el menú de pistas de audio abierto"></p>
@@ -40,7 +40,7 @@ Usa [libmpv](https://mpv.io), así que reproduce prácticamente cualquier format
 
 ## Instalación
 
-Viene con Lunele: [su instalador](https://github.com/iMacnucintosh/lunele-shell/blob/main/README.es.md#instalación) lo instala y lo deja como reproductor de vídeo predeterminado. Por separado, en Arch Linux, añade el [repositorio de paquetes de Lunele](https://github.com/iMacnucintosh/lunele-packages) e instálalo con pacman:
+Viene con Sylenara: [su instalador](https://github.com/iMacnucintosh/sylenara-shell/blob/main/README.es.md#instalación) lo instala y lo deja como reproductor de vídeo predeterminado. Por separado, en Arch Linux, añade el [repositorio de paquetes de Sylenara](https://github.com/iMacnucintosh/sylenara-packages) e instálalo con pacman:
 
 ```sh
 sudo pacman -S veo-git
@@ -60,7 +60,7 @@ make install
 
 La receta del paquete es `packaging/PKGBUILD` (`veo-git`).
 
-## Integración con Lunele
+## Integración con Sylenara
 
 - **Tema**: Veo lee `~/.config/veo/theme.json`, que la shell escribe con cada esquema de colores, y lo sigue en vivo, claro u oscuro. También sigue la velocidad de animación de la shell (`animScale` en ese fichero).
 - **Ficheros**: binario `~/.local/bin/veo`, estado `~/.local/state/veo/`.
