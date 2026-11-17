@@ -71,4 +71,4 @@ The code is in English; `i18n/<language>.json` translates it (`VEO_LANG` forces 
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+GPL-3.0-only, see [LICENSE](LICENSE). Copyright (C) 2026 Manuel López Mallorquín. Credits in [NOTICE](NOTICE).
