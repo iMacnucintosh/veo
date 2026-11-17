@@ -1,54 +1,74 @@
-# Veo
+<h1 align="center">Veo</h1>
 
-Reproductor de vídeo de [Sylphrena](https://github.com/iMacnucintosh/sylphrena-shell): pantalla completa, controles mínimos que se apartan solos, y las pistas de audio y subtítulos que traen los archivos (los MKV suelen llevar varias). Usa [libmpv](https://mpv.io), así que reproduce prácticamente cualquier formato, con decodificación por hardware y subtítulos ASS con su estilo.
+<p align="center"><strong>English</strong> · <a href="./README.es.md">Español</a></p>
 
-- Binario: `~/.local/bin/veo` · tema: `~/.config/veo/theme.json` (lo escribe la shell) · estado: `~/.local/state/veo/`
+<p align="center">
+The video player of <a href="https://github.com/iMacnucintosh/sylphrena-shell">Sylphrena</a>: full screen, minimal controls that get out of the way, and the audio and subtitle tracks your files carry (MKVs often have several).
+</p>
 
-## Funciones
+<p align="center"><img src="docs/screenshot.webp" width="760" alt="Veo playing a video with its audio track menu open"></p>
 
-- **Pantalla completa** al abrir un vídeo (`F`, `F11` o doble clic para alternar). Los controles y el puntero se esconden a los 2,5 s sin mover el ratón; vuelven al moverlo.
-- **Controles**: play/pausa, anterior/siguiente de la carpeta, barra de progreso (arrastrar; enseña el tiempo bajo el puntero), volumen propio (rueda, flechas ↑↓, `M` silencia; se recuerda entre sesiones), velocidad (0,5×–2×), pistas de audio, subtítulos y pantalla completa.
-- **Audio**: cada pista con su idioma («Español», «Inglés»), título, canales (Estéreo, 5.1…) y códec. Prefiere el idioma del sistema y luego el inglés.
-- **Subtítulos**: los del archivo, los que estén junto al vídeo con el mismo nombre (se cargan solos) o uno elegido con Seeker (SRT, ASS, VTT); también arrastrándolo a la ventana. Retraso ajustable (`Z`/`X`, ±0,1 s).
-- **Continuar donde lo dejaste**: posición, pistas de audio y subtítulos, y retraso de cada vídeo. Lo visto hasta el final empieza de nuevo.
-- **Siguiente de la carpeta** (los capítulos de una serie, en orden natural: 2 antes que 10): al terminar aparece «A continuación» y empieza solo en 6 s, salvo que lo canceles.
-- **Abrir**: argumento, arrastrar a la ventana o `O` (selector de Seeker).
+It uses [libmpv](https://mpv.io), so it plays almost any format, with hardware decoding and ASS subtitles in their own style.
 
-### Teclado
+## Features
 
-| Tecla | Acción |
+- **Full screen** when you open a video (`F`, `F11` or a double click toggles it). The controls and the pointer hide after 2.5 s without moving the mouse and come back when you move it.
+- **Controls**: play/pause, previous/next in the folder, a progress bar (drag it; it shows the time under the pointer), its own volume (wheel, `↑` `↓`, `M` mutes; remembered between sessions), speed (0.5×–2×), audio tracks, subtitles and full screen.
+- **Audio**: each track with its language ("Spanish", "English"), title, channels (Stereo, 5.1…) and codec. It prefers the system language, then English.
+- **Subtitles**: the ones in the file, the ones next to the video with the same name (loaded by themselves) or one you pick with Seeker (SRT, ASS, VTT); you can also drop one on the window. Adjustable delay (`Z`/`X`, ±0.1 s).
+- **Resume where you left off**: position, audio and subtitle tracks and delay of each video. What you watched to the end starts again.
+- **Next in the folder** (the episodes of a series, in natural order: 2 before 10): when one ends "Up next" appears and it starts by itself in 6 s, unless you cancel it.
+- **Open**: an argument, dragging onto the window or `O` (Seeker's file picker).
+
+### Keyboard
+
+| Key | Action |
 | --- | --- |
-| `Espacio`, `K` | Pausa / reproduce |
-| `←` `→` | −10 s / +10 s (`Mayús`: un minuto) |
-| `↑` `↓` | Volumen ±5 |
-| `M` | Silenciar |
-| `F`, `F11`, doble clic | Pantalla completa |
-| `Esc` | Cierra un menú o sale de pantalla completa |
-| `N` / `P` | Siguiente / anterior de la carpeta |
-| `[` `]` / `Retroceso` | Velocidad −/+ 0,25 / normal |
-| `A` / `S` | Siguiente pista de audio / de subtítulos |
-| `Z` `X` | Retraso de subtítulos −/+ 0,1 s |
-| `Inicio` | Al principio |
-| `O`, `Ctrl+O` | Abrir |
-| `Q`, `Ctrl+Q`, `Ctrl+W` | Salir |
+| `Space`, `K` | Pause / play |
+| `←` `→` | −10 s / +10 s (`Shift`: one minute) |
+| `↑` `↓` | Volume ±5 |
+| `M` | Mute |
+| `F`, `F11`, double click | Full screen |
+| `Esc` | Close a menu or leave full screen |
+| `N` / `P` | Next / previous in the folder |
+| `[` `]` / `Backspace` | Speed −/+ 0.25 / normal |
+| `A` / `S` | Next audio track / subtitle track |
+| `Z` `X` | Subtitle delay −/+ 0.1 s |
+| `Home` | To the start |
+| `O`, `Ctrl+O` | Open |
+| `Q`, `Ctrl+Q`, `Ctrl+W` | Quit |
 
-## Build
+## Install
 
-Necesita Qt 6 (`qt6-base`, `qt6-declarative`, `qt6-svg`, `qt6-wayland`) y `mpv` (libmpv).
+It comes with Sylphrena: [its installer](https://github.com/iMacnucintosh/sylphrena-shell#installation) sets it up and makes it the default video player. On its own, on Arch Linux, add the [Sylphrena package repository](https://github.com/iMacnucintosh/sylphrena-packages) and install it with pacman:
 
-```bash
-cd ~/Desarrollo/veo
+```sh
+sudo pacman -S veo-git
+```
+
+## Build from source
+
+It needs Qt 6 (`qt6-base`, `qt6-declarative`, `qt6-svg`, `qt6-wayland`) and `mpv` (libmpv).
+
+```sh
+git clone https://github.com/iMacnucintosh/veo
+cd veo
 qmake6 PREFIX=$HOME/.local
 make -j$(nproc)
 make install
 ```
 
-Paquete: `packaging/PKGBUILD` (`veo-git`).
+The package recipe is `packaging/PKGBUILD` (`veo-git`).
 
-## Idiomas
+## Sylphrena integration
 
-El código está en inglés; `i18n/<idioma>.json` lo traduce (`VEO_LANG` fuerza uno). `scripts/check-i18n.py` comprueba que no falte ni sobre ninguna cadena.
+- **Theme**: Veo reads `~/.config/veo/theme.json`, which the shell writes with every colour scheme, and follows it live, light or dark. It also follows the shell's animation speed (`animScale` in that file).
+- **Files**: binary `~/.local/bin/veo`, state `~/.local/state/veo/`.
 
-## Licencia
+## Languages
 
-MIT
+The code is in English; `i18n/<language>.json` translates it (`VEO_LANG` forces one). Today: Spanish (`es`). `scripts/check-i18n.py` checks that no string is missing or left over.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
